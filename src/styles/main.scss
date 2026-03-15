@@ -1,7 +1,12 @@
 @import "variables";
 
+#root {
+  background-color: $background;
+  min-height: 100vh;
+}
+
 body {
-  background-color: #{$background};
+  background-color: $background;
   color: $text-main;
   font-family: $font-body;
 }
