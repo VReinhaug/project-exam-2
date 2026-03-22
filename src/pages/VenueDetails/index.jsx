@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { specificVenueUrl } from "../../api";
+import { bookingsUrl } from "../../api";
+import Calendar from "../../components/Calendar";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -18,7 +19,7 @@ function VenueDetails() {
   useEffect(() => {
     async function fetchVenue() {
       try {
-        const response = await fetch(specificVenueUrl(id));
+        const response = await fetch(bookingsUrl(id));
         const json = await response.json();
 
         setVenue(json.data);
@@ -86,7 +87,7 @@ function VenueDetails() {
             <p>Max guests: {venue.maxGuests}</p>
 
             <div className="calendar">
-              <p>Calendar placeholder</p>
+              <Calendar bookings={venue.bookings} />
             </div>
 
             <button className="btn" disabled>
