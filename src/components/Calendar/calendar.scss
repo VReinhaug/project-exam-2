@@ -17,6 +17,10 @@
   color: $text-main;
 }
 
+.rdrStartEdge,
+.rdrEndEdge,
+.rdrDayStartPreview,
+.rdrDayEndPreview,
 .rdrSelected,
 .rdrInRange {
   background: $nav-success !important;

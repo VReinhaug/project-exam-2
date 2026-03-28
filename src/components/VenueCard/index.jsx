@@ -2,11 +2,9 @@ import "./venueCard.scss";
 import { Link } from "react-router-dom";
 
 function VenueCard({ venue }) {
-  const image =
-    venue.media?.[0]?.url ||
-    "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d4d";
+  const image = venue.media?.[0]?.url;
 
-  const alt = venue.media?.[0]?.alt || venue.name;
+  const alt = venue.media?.[0]?.alt;
 
   return (
     <Link to={`/venues/${venue.id}`} className="venue-card">

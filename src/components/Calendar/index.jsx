@@ -1,9 +1,9 @@
 import "./calendar.scss";
 import { DateRange } from "react-date-range";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { enUS } from "date-fns/locale";
 
-function Calendar({ bookings }) {
+function Calendar({ bookings, onDateChange }) {
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -11,6 +11,13 @@ function Calendar({ bookings }) {
       key: "selection",
     },
   ]);
+
+  // Send selected dates to parent
+  useEffect(() => {
+    if (onDateChange) {
+      onDateChange(dateRange[0]);
+    }
+  }, [dateRange, onDateChange]);
 
   // Convert bookings → disabled dates
   const disabledDates = useMemo(() => {

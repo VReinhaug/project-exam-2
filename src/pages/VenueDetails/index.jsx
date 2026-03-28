@@ -16,6 +16,8 @@ function VenueDetails() {
   const [venue, setVenue] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [selectedDates, setSelectedDates] = useState(null);
+
   useEffect(() => {
     async function fetchVenue() {
       try {
@@ -36,9 +38,17 @@ function VenueDetails() {
   if (loading) return <p>Loading...</p>;
   if (!venue) return <p>Venue not found</p>;
 
-  const image =
-    venue.media?.[0]?.url ||
-    "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d4d";
+  // Calculate number of nights
+  let nights = 0;
+  if (selectedDates?.startDate && selectedDates?.endDate) {
+    const diffTime =
+      new Date(selectedDates.endDate) - new Date(selectedDates.startDate);
+    nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  const totalPrice = nights * venue.price;
+
+  const image = venue.media?.[0]?.url;
 
   return (
     <Container className="venue-details">
@@ -52,16 +62,22 @@ function VenueDetails() {
       </p>
 
       <div className="image-gallery">
-        <img
-          className="main-image"
-          src={venue.media?.[0]?.url}
-          alt={venue.name}
-        />
+        {venue.media?.[0]?.url ? (
+          <img
+            className="main-image"
+            src={venue.media[0].url}
+            alt={venue.name}
+          />
+        ) : (
+          <div className="no-image">Sorry, no image available</div>
+        )}
 
         <div className="thumbnail-row">
-          {venue.media?.slice(1, 5).map((img, index) => (
-            <img key={index} src={img.url} alt={img.alt} />
-          ))}
+          {venue.media
+            ?.slice(1, 5)
+            .map((img, index) =>
+              img.url ? <img key={index} src={img.url} alt={img.alt} /> : null
+            )}
         </div>
       </div>
 
@@ -87,8 +103,20 @@ function VenueDetails() {
             <p>Max guests: {venue.maxGuests}</p>
 
             <div className="calendar">
-              <Calendar bookings={venue.bookings} />
+              <Calendar
+                bookings={venue.bookings}
+                onDateChange={setSelectedDates}
+              />
             </div>
+
+            {nights > 0 && (
+              <div>
+                <p>
+                  {nights} night{nights > 1 ? "s" : ""} × ${venue.price}
+                </p>
+                <h4>Total: ${totalPrice}</h4>
+              </div>
+            )}
 
             <button className="btn" disabled>
               Login to book
