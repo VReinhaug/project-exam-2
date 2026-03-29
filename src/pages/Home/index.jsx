@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import "./home.scss";
 import bannerImage from "../../assets/banner.jpg";
+import SearchBar from "../../components/SearchBar";
 
 function Home() {
   const [venues, setVenues] = useState([]);
@@ -47,13 +48,13 @@ function Home() {
 
         <div className="hero-overlay">
           <h1>Find your next adventure</h1>
+          <SearchBar venues={venues} />
         </div>
       </div>
 
       {}
       <Container className="home-content">
         <h2>Recently updated venues</h2>
-
         <Row>
           {filtered.slice(0, 3).map((venue) => (
             <Col key={venue.id} md={6} lg={4} className="mb-4">
@@ -61,10 +62,11 @@ function Home() {
             </Col>
           ))}
         </Row>
-
-        <Link to="/venues">
-          <button className="btn mt-3">See all venues</button>
-        </Link>
+        <div className="d-flex justify-content-center mt-3">
+          <Link to="/venues" className="btn">
+            See all venues
+          </Link>
+        </div>{" "}
       </Container>
     </div>
   );

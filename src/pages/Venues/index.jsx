@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { VENUES_URL } from "../../api";
 
 import VenueCard from "../../components/VenueCard/index";
+import SearchBar from "../../components/SearchBar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -34,6 +35,9 @@ function Venues() {
   return (
     <Container className="venues-page">
       <h1 className="venues-title">Where would you like to go?</h1>
+      <div className="venues-search">
+        <SearchBar venues={venues} />
+      </div>
 
       <Row>
         {venues.map((venue) => (
