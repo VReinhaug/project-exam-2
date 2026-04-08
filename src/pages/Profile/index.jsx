@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
 import { profileUrl, profileBookingsUrl, profileVenuesUrl } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
+import UpgradeToManager from "../../components/Profile/UpgradeToManager";
 import "./profile.scss";
 
 function Profile() {
@@ -100,6 +101,8 @@ function Profile() {
           ))}
         </Row>
       </section>
+
+      <UpgradeToManager isManager={profile.venueManager} />
 
       {profile.venueManager && (
         <section className="mt-5">
