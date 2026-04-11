@@ -4,6 +4,7 @@ import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
 import { profileUrl, profileBookingsUrl, profileVenuesUrl } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
+import UpdateAvatar from "../../components/Profile/UpdateAvatar";
 import "./profile.scss";
 
 function Profile() {
@@ -79,6 +80,7 @@ function Profile() {
               className="avatar"
             />
           )}
+          <UpdateAvatar name={profile.name} onUpdate={setProfile} />
           <h1>{profile.name}</h1>
           <p>{profile.bio}</p>
         </div>
