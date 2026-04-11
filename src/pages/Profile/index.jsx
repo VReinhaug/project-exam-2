@@ -33,7 +33,7 @@ function Profile() {
         const bookingsJson = await bookingsRes.json();
         setBookings(bookingsJson.data);
 
-        // Fetch venues (only if manager)
+        // Fetch venues (if manager)
         if (profileJson.data.venueManager) {
           const venuesRes = await fetch(profileVenuesUrl(name), {
             headers,
@@ -104,8 +104,7 @@ function Profile() {
         </Row>
       </section>
 
-      <UpgradeToManager isManager={profile.venueManager} />
-
+      <UpgradeToManager profile={profile} onUpdate={setProfile} />
       {profile.venueManager && (
         <section className="mt-5">
           <h2>My Venues</h2>
