@@ -5,7 +5,9 @@ import { profileUrl, profileBookingsUrl, profileVenuesUrl } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
 import UpdateAvatar from "../../components/Profile/UpdateAvatar";
+import ManagerSection from "../../components/Profile/ManagerSection";
 import "./profile.scss";
+import "../../styles/_forms.scss";
 
 function Profile() {
   const { name } = useParams();
@@ -105,6 +107,7 @@ function Profile() {
       </section>
 
       <UpgradeToManager profile={profile} onUpdate={setProfile} />
+
       {profile.venueManager && (
         <section className="mt-5">
           <h2>My Venues</h2>
@@ -124,6 +127,7 @@ function Profile() {
               </Col>
             ))}
           </Row>
+          {profile.venueManager && <ManagerSection setVenues={setVenues} />}
         </section>
       )}
     </Container>
