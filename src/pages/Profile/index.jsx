@@ -110,7 +110,6 @@ function Profile() {
 
       {profile.venueManager && (
         <section className="mt-5">
-          <h2>My Venues</h2>
           <Row>
             {venues.map((venue) => (
               <Col key={venue.id} md={6} lg={4}>
