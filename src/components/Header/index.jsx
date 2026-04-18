@@ -7,6 +7,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 function Header() {
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
+  console.log("User:", user);
+
   return (
     <Navbar expand={false} className="holidaze-navbar">
       <Container fluid className="holidaze-header">
@@ -31,9 +36,11 @@ function Header() {
                 Venues
               </Nav.Link>
 
-              <Nav.Link as={Link} to="/profile">
-                My profile
-              </Nav.Link>
+              {user && (
+                <Nav.Link as={Link} to={`/profile/${user.name}`}>
+                  My profile
+                </Nav.Link>
+              )}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
