@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./header.scss";
 
 import Container from "react-bootstrap/Container";
@@ -7,10 +7,17 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 function Header() {
+  const navigate = useNavigate();
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
   console.log("User:", user);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+  }
 
   return (
     <Navbar expand={false} className="holidaze-navbar">
@@ -40,6 +47,14 @@ function Header() {
                 <Nav.Link as={Link} to={`/profile/${user.name}`}>
                   My profile
                 </Nav.Link>
+              )}
+
+              {!user ? (
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              ) : (
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               )}
             </Nav>
           </Offcanvas.Body>
