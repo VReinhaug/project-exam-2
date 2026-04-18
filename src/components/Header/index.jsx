@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./header.scss";
 
 import Container from "react-bootstrap/Container";
@@ -8,16 +9,32 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [show, setShow] = useState(false);
+
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
   console.log("User:", user);
 
+  function handleClose() {
+    setShow(false);
+  }
+
+  function handleShow() {
+    setShow(true);
+  }
+
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    handleClose();
     navigate("/");
   }
+
+  useEffect(() => {
+    handleClose();
+  }, [location]);
 
   return (
     <Navbar expand={false} className="holidaze-navbar">
@@ -26,9 +43,14 @@ function Header() {
           Holidaze
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="offcanvasNavbar" />
+        <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShow} />
 
-        <Navbar.Offcanvas id="offcanvasNavbar" placement="end">
+        <Navbar.Offcanvas
+          id="offcanvasNavbar"
+          placement="end"
+          show={show}
+          onHide={handleClose}
+        >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title className="logo">Holidaze</Offcanvas.Title>
           </Offcanvas.Header>
