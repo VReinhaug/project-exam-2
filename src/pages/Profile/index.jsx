@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Card, Button } from "react-bootstrap";
 import { profileUrl, profileBookingsUrl, profileVenuesUrl } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
 import UpdateAvatar from "../../components/Profile/UpdateAvatar";
 import ManagerSection from "../../components/Profile/ManagerSection";
+import useLogout from "../../auth/Logout";
 import "./profile.scss";
 import "../../styles/_forms.scss";
 
@@ -16,6 +17,7 @@ function Profile() {
   const [bookings, setBookings] = useState([]);
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
+  const logout = useLogout();
 
   useEffect(() => {
     async function fetchData() {
@@ -129,6 +131,7 @@ function Profile() {
           {profile.venueManager && <ManagerSection setVenues={setVenues} />}
         </section>
       )}
+      <Button onClick={logout}>Log out</Button>
     </Container>
   );
 }
