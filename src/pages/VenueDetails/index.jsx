@@ -155,6 +155,16 @@ function VenueDetails() {
                 <h4>Total: ${totalPrice}</h4>
               </div>
             )}
+            <div className="mt-3">
+              <label>Guests:</label>
+              <input
+                type="number"
+                min="1"
+                max={venue.maxGuests}
+                value={guests}
+                onChange={(e) => setGuests(e.target.value)}
+              />
+            </div>
 
             <button
               className="btn mt-3"
