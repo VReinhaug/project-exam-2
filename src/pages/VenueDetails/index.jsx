@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthContext";
 import { bookingsUrl } from "../../api";
+import { createBooking } from "../../components/Bookings";
 import Calendar from "../../components/Calendar";
 
 import Container from "react-bootstrap/Container";
@@ -17,6 +19,12 @@ function VenueDetails() {
   const [loading, setLoading] = useState(true);
 
   const [selectedDates, setSelectedDates] = useState(null);
+
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const [guests, setGuests] = useState(1);
+  const [bookingLoading, setBookingLoading] = useState(false);
 
   useEffect(() => {
     async function fetchVenue() {
@@ -49,6 +57,36 @@ function VenueDetails() {
   const totalPrice = nights * venue.price;
 
   const image = venue.media?.[0]?.url;
+
+  async function handleBooking() {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    if (!selectedDates?.startDate || !selectedDates?.endDate) {
+      alert("Please select dates");
+      return;
+    }
+
+    setBookingLoading(true);
+
+    try {
+      await createBooking({
+        dateFrom: selectedDates.startDate,
+        dateTo: selectedDates.endDate,
+        guests,
+        venueId: venue.id,
+      });
+
+      navigate(`/profile/${user.name}`);
+    } catch (error) {
+      console.error(error);
+      alert("Booking failed");
+    } finally {
+      setBookingLoading(false);
+    }
+  }
 
   return (
     <Container className="venue-details">
@@ -118,8 +156,12 @@ function VenueDetails() {
               </div>
             )}
 
-            <button className="btn" disabled>
-              Login to book
+            <button
+              className="btn mt-3"
+              onClick={handleBooking}
+              disabled={bookingLoading || nights === 0}
+            >
+              {user ? "Book now" : "Login to book"}
             </button>
           </div>
         </Col>
