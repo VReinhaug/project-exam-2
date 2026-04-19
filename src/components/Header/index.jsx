@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../auth/AuthContext";
 import "./header.scss";
 
 import Container from "react-bootstrap/Container";
@@ -8,12 +9,10 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 function Header() {
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [show, setShow] = useState(false);
-
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
 
   console.log("User:", user);
 
@@ -26,8 +25,7 @@ function Header() {
   }
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    logout();
     handleClose();
     navigate("/");
   }
