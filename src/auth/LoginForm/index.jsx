@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_URL } from "../../api";
+import { useAuth } from "../AuthContext";
 
 function LoginForm() {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,14 +14,14 @@ function LoginForm() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   function handleChange(e) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   }
-
-  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,9 +45,7 @@ function LoginForm() {
 
       const user = json.data;
 
-      // Save auth
-      localStorage.setItem("token", user.accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
+      login(user);
 
       // redirect
       navigate(`/profile/${user.name}`);
