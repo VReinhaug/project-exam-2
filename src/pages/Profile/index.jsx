@@ -6,7 +6,6 @@ import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
 import UpdateAvatar from "../../components/Profile/UpdateAvatar";
 import ManagerSection from "../../components/Profile/ManagerSection";
-import useLogout from "../../auth/Logout";
 import "./profile.scss";
 import "../../styles/_forms.scss";
 
@@ -17,7 +16,6 @@ function Profile() {
   const [bookings, setBookings] = useState([]);
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
-  const logout = useLogout();
 
   useEffect(() => {
     async function fetchData() {
@@ -131,7 +129,6 @@ function Profile() {
           {profile.venueManager && <ManagerSection setVenues={setVenues} />}
         </section>
       )}
-      <Button onClick={logout}>Log out</Button>
     </Container>
   );
 }
