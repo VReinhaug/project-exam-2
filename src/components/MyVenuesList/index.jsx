@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { Card, Col, Button } from "react-bootstrap";
 import { useState } from "react";
+import { deleteVenue } from "../Profile/EditVenue";
 
-function MyVenuesList({ venues = [] }) {
+function MyVenuesList({ venues = [], setVenues }) {
   const [openVenueId, setOpenVenueId] = useState(null);
 
   if (!venues || venues.length === 0) {
@@ -11,6 +12,24 @@ function MyVenuesList({ venues = [] }) {
 
   function toggleBookings(venueId) {
     setOpenVenueId((prev) => (prev === venueId ? null : venueId));
+  }
+
+  // Delete venue
+  async function handleDelete(id) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this venue?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await deleteVenue(id);
+
+      // Remove venue
+      setVenues((prev) => prev.filter((v) => v.id !== id));
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete venue");
+    }
   }
 
   return venues.map((venue) => {
@@ -24,7 +43,28 @@ function MyVenuesList({ venues = [] }) {
 
     return (
       <Col key={venue.id} md={6} lg={4}>
-        <Card className="mb-3 venue-card">
+        <Card className="mb-3 venue-card position-relative">
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              display: "flex",
+              gap: "10px",
+              zIndex: 10,
+            }}
+          >
+            <Button size="sm">Edit</Button>
+
+            <Button
+              size="sm"
+              variant="danger"
+              onClick={() => handleDelete(venue.id)}
+            >
+              Delete
+            </Button>
+          </div>
+
           <Link to={`/venues/${venue.id}`}>
             <div className="venue-image-wrapper">
               {image && <Card.Img variant="top" src={image} alt={alt} />}

@@ -11,7 +11,7 @@ function ManagerSection({ venues, setVenues }) {
     <div className="mt-5">
       <h2 className="mt-4">My Venues</h2>
       <Row>
-        <MyVenuesList venues={venues} />
+        <MyVenuesList venues={venues} setVenues={setVenues} />
       </Row>
       <CreateVenueForm onCreate={handleCreate} />
     </div>
