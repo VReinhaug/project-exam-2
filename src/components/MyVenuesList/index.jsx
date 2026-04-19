@@ -12,25 +12,21 @@ function MyVenuesList({ venues = [] }) {
 
     return (
       <Col key={venue.id} md={6} lg={4}>
-        <Card className="mb-3 venue-card">
-          <div className="venue-image-wrapper">
-            {image && <Card.Img variant="top" src={image} alt={alt} />}
+        <Link to={`/venues/${venue.id}`}>
+          <Card className="mb-3 venue-card">
+            <div className="venue-image-wrapper">
+              {image && <Card.Img variant="top" src={image} alt={alt} />}
 
-            <div className="price-badge">${venue.price}</div>
-          </div>
-
-          <Card.Body>
-            <Card.Title>{venue.name}</Card.Title>
-
-            <p className="venue-location">
-              {venue.location?.city}, {venue.location?.country}
-            </p>
-
-            <Link to={`/venues/${venue.id}`} className="btn">
-              View Venue
-            </Link>
-          </Card.Body>
-        </Card>
+              <div className="price-badge">${venue.price}</div>
+            </div>
+            <Card.Body>
+              <Card.Title>{venue.name}</Card.Title>
+              <p className="venue-location">
+                {venue.location?.city}, {venue.location?.country}
+              </p>
+            </Card.Body>
+          </Card>
+        </Link>
       </Col>
     );
   });

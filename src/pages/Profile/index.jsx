@@ -37,9 +37,10 @@ function Profile() {
 
         // Fetch venues (if manager)
         if (profileJson.data.venueManager) {
-          const venuesRes = await fetch(profileVenuesUrl(name), {
-            headers,
-          });
+          const venuesRes = await fetch(
+            `${profileVenuesUrl(name)}?_bookings=true`,
+            { headers }
+          );
           const venuesJson = await venuesRes.json();
           setVenues(venuesJson.data);
         }
@@ -110,23 +111,9 @@ function Profile() {
 
       {profile.venueManager && (
         <section className="mt-5">
-          <Row>
-            {venues.map((venue) => (
-              <Col key={venue.id} md={6} lg={4}>
-                <Card className="mb-3">
-                  {venue.media?.[0]?.url && (
-                    <Card.Img src={venue.media[0].url} />
-                  )}
-                  <Card.Body>
-                    <Card.Title>{venue.name}</Card.Title>
-                    <p>{venue.price} NOK / night</p>
-                    <p>Max guests: {venue.maxGuests}</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          {profile.venueManager && <ManagerSection setVenues={setVenues} />}
+          {profile.venueManager && (
+            <ManagerSection venues={venues} setVenues={setVenues} />
+          )}
         </section>
       )}
     </Container>
