@@ -3,6 +3,10 @@ import { Card, Col, Button } from "react-bootstrap";
 import { useState } from "react";
 import { deleteVenue } from "../Profile/EditVenue";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+
 function MyVenuesList({ venues = [], setVenues }) {
   const [openVenueId, setOpenVenueId] = useState(null);
 
@@ -54,15 +58,13 @@ function MyVenuesList({ venues = [], setVenues }) {
               zIndex: 10,
             }}
           >
-            <Button size="sm">Edit</Button>
+            <FontAwesomeIcon icon={faPenToSquare} />
 
-            <Button
-              size="sm"
-              variant="danger"
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              style={{ cursor: "pointer" }}
               onClick={() => handleDelete(venue.id)}
-            >
-              Delete
-            </Button>
+            />
           </div>
 
           <Link to={`/venues/${venue.id}`}>
