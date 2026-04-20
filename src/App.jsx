@@ -6,6 +6,7 @@ import Venues from "./pages/Venues/index";
 import VenueDetails from "./pages/VenueDetails";
 import LoginPage from "./pages/Login";
 import Profile from "./pages/Profile";
+import EditVenue from "./pages/EditVenue";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/venues/:id" element={<VenueDetails />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile/:name" element={<Profile />} />
+          <Route path="/venues/edit/:id" element={<EditVenue />} />
         </Route>
       </Routes>
     </div>

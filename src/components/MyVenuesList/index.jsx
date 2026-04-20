@@ -58,7 +58,12 @@ function MyVenuesList({ venues = [], setVenues }) {
               zIndex: 10,
             }}
           >
-            <FontAwesomeIcon icon={faPenToSquare} />
+            <Link to={`/venues/edit/${venue.id}`}>
+              <FontAwesomeIcon
+                icon={faPenToSquare}
+                style={{ cursor: "pointer" }}
+              />
+            </Link>
 
             <FontAwesomeIcon
               icon={faTrashCan}
