@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Spinner, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
 import { profileUrl, profileBookingsUrl, profileVenuesUrl } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
@@ -91,20 +91,26 @@ function Profile() {
 
       <section className="mt-5">
         <h2>My Bookings</h2>
-        <Row>
-          {bookings.map((booking) => (
-            <Col key={booking.id} md={6} lg={4}>
-              <Card className="mb-3">
-                <Card.Body>
-                  <Card.Title>Booking</Card.Title>
-                  <p>From: {new Date(booking.dateFrom).toLocaleDateString()}</p>
-                  <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
-                  <p>Guests: {booking.guests}</p>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {bookings.length === 0 ? (
+          <p>You have no bookings yet</p>
+        ) : (
+          <Row>
+            {bookings.map((booking) => (
+              <Col key={booking.id} md={6} lg={4}>
+                <Card className="mb-3">
+                  <Card.Body>
+                    <Card.Title>Booking</Card.Title>
+                    <p>
+                      From: {new Date(booking.dateFrom).toLocaleDateString()}
+                    </p>
+                    <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
+                    <p>Guests: {booking.guests}</p>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
       </section>
 
       <UpgradeToManager profile={profile} onUpdate={setProfile} />
