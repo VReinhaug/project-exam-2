@@ -1,32 +1,41 @@
-import { useState } from "react";
+import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_URL } from "../../api";
 import { useAuth } from "../AuthContext";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+// Validation schema
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
+
 function LoginForm() {
   const { login } = useAuth();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+  const [serverError, setServerError] = React.useState(null);
+
+  async function onSubmit(data) {
+    setServerError(null);
 
     try {
       const res = await fetch(LOGIN_URL, {
@@ -34,7 +43,7 @@ function LoginForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       const json = await res.json();
@@ -46,43 +55,42 @@ function LoginForm() {
       const user = json.data;
 
       login(user);
-
-      // redirect
       navigate(`/profile/${user.name}`);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      setServerError(err.message);
     }
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {error && <Alert variant="danger">{error}</Alert>}
+    <Form novalidate onSubmit={handleSubmit(onSubmit)}>
+      {serverError && <Alert variant="danger">{serverError}</Alert>}
 
       <Form.Group className="mb-3">
         <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
-          name="email"
-          required
-          onChange={handleChange}
+          {...register("email")}
+          isInvalid={!!errors.email}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.email?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group className="mb-3">
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
-          name="password"
-          required
-          minLength={8}
-          onChange={handleChange}
+          {...register("password")}
+          isInvalid={!!errors.password}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors.password?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit" disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Logging in..." : "Login"}
       </Button>
     </Form>
   );
