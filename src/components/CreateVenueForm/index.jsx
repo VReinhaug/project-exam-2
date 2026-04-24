@@ -3,11 +3,44 @@ import { Form, Button } from "react-bootstrap";
 import { VENUES_URL } from "../../api";
 import { getHeaders } from "../../auth/AuthHeaders";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+// Validation schema
+const schema = yup.object({
+  name: yup.string().required("Name is required"),
+  description: yup.string().required("Description is required"),
+
+  media: yup.object({
+    url: yup.string().url("Must be a valid URL").nullable().notRequired(),
+    alt: yup.string().notRequired(),
+  }),
+
+  price: yup
+    .number()
+    .typeError("Price must be a number")
+    .required("Price is required")
+    .min(0, "Price must be at least 0"),
+
+  maxGuests: yup
+    .number()
+    .typeError("Max guests must be a number")
+    .required("Max guests is required")
+    .min(1, "Must allow at least 1 guest"),
+
+  location: yup.object({
+    address: yup.string().notRequired(),
+    city: yup.string().notRequired(),
+    country: yup.string().notRequired(),
+  }),
+});
+
 function CreateVenueForm({ onCreate }) {
   const initialState = {
     name: "",
     description: "",
-    media: [{ url: "", alt: "" }],
+    media: { url: "", alt: "" },
     price: "",
     maxGuests: "",
     meta: {
@@ -27,52 +60,23 @@ function CreateVenueForm({ onCreate }) {
     },
   };
 
-  const [formData, setFormData] = useState(initialState);
+  const [meta, setMeta] = useState(initialState.meta);
 
-  function handleChange(e) {
-    const { name, value, type } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" ? Number(value) : value,
-    }));
-  }
-
-  function handleMediaChange(e) {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      media: [
-        {
-          ...prev.media[0],
-          [name]: value,
-        },
-      ],
-    }));
-  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: initialState,
+  });
 
   function handleMetaChange(e) {
     const { name, checked } = e.target;
-
-    setFormData((prev) => ({
+    setMeta((prev) => ({
       ...prev,
-      meta: {
-        ...prev.meta,
-        [name]: checked,
-      },
-    }));
-  }
-
-  function handleLocationChange(e) {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      location: {
-        ...prev.location,
-        [name]: value,
-      },
+      [name]: checked,
     }));
   }
 
@@ -84,38 +88,25 @@ function CreateVenueForm({ onCreate }) {
     );
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-
+  async function onSubmit(data) {
     const payload = {
-      name: formData.name.trim(),
-      description: formData.description.trim(),
-      price: Number(formData.price),
-      maxGuests: Number(formData.maxGuests),
-      meta: formData.meta,
+      name: data.name.trim(),
+      description: data.description.trim(),
+      price: Number(data.price),
+      maxGuests: Number(data.maxGuests),
+      meta,
     };
 
-    if (formData.media[0].url.trim()) {
+    if (data.media?.url?.trim()) {
       payload.media = [
         {
-          url: formData.media[0].url.trim(),
-          alt: formData.media[0].alt.trim() || "",
+          url: data.media.url.trim(),
+          alt: data.media.alt?.trim() || "",
         },
       ];
     }
 
-    const cleanedLocation = removeEmpty({
-      ...formData.location,
-      lat:
-        formData.location.lat !== ""
-          ? Number(formData.location.lat)
-          : undefined,
-      lng:
-        formData.location.lng !== ""
-          ? Number(formData.location.lng)
-          : undefined,
-    });
-
+    const cleanedLocation = removeEmpty(data.location || {});
     if (Object.keys(cleanedLocation).length > 0) {
       payload.location = cleanedLocation;
     }
@@ -126,123 +117,111 @@ function CreateVenueForm({ onCreate }) {
       body: JSON.stringify(payload),
     });
 
-    const data = await res.json();
+    const result = await res.json();
 
     if (!res.ok) {
-      console.error("API error:", data);
+      console.error("API error:", result);
       return;
     }
 
-    onCreate(data.data);
-
-    setFormData(initialState);
+    onCreate(result.data);
+    reset();
   }
 
   return (
-    <Form onSubmit={handleSubmit} className="custom-form">
+    <Form
+      onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.log("Validation errors:", errors);
+      })}
+      noValidate
+    >
       <h3>Create new venue</h3>
-
       <Form.Control
-        name="name"
-        value={formData.name}
-        placeholder="Name"
-        required
-        onChange={handleChange}
+        placeholder="Name*"
+        {...register("name")}
+        isInvalid={!!errors.name}
       />
-
+      <Form.Control.Feedback type="invalid">
+        {errors.name?.message}
+      </Form.Control.Feedback>
       <Form.Control
-        name="description"
-        value={formData.description}
-        placeholder="Description"
-        required
+        placeholder="Description*"
         className="mt-2"
-        onChange={handleChange}
+        {...register("description")}
+        isInvalid={!!errors.description}
       />
-
+      <Form.Control.Feedback type="invalid">
+        {errors.description?.message}
+      </Form.Control.Feedback>
       <Form.Control
-        name="url"
-        value={formData.media[0].url}
         placeholder="Image URL"
         className="mt-2"
-        onChange={handleMediaChange}
+        {...register("media.url")}
+        isInvalid={!!errors.media?.url}
       />
-
+      <Form.Control.Feedback type="invalid">
+        {errors.media?.url?.message}
+      </Form.Control.Feedback>
       <Form.Control
-        name="alt"
-        value={formData.media[0].alt}
         placeholder="Image alt text"
         className="mt-2"
-        onChange={handleMediaChange}
+        {...register("media.alt")}
       />
-
       <Form.Control
-        name="price"
-        value={formData.price}
         type="number"
-        placeholder="Price"
-        required
+        placeholder="Price*"
         className="mt-2"
-        onChange={handleChange}
+        {...register("price")}
+        isInvalid={!!errors.price}
       />
-
+      <Form.Control.Feedback type="invalid">
+        {errors.price?.message}
+      </Form.Control.Feedback>
       <Form.Control
-        name="maxGuests"
-        value={formData.maxGuests}
         type="number"
-        placeholder="Max Guests"
-        required
+        placeholder="Max Guests*"
         className="mt-2"
-        onChange={handleChange}
+        {...register("maxGuests")}
+        isInvalid={!!errors.maxGuests}
       />
-
+      <Form.Control.Feedback type="invalid">
+        {errors.maxGuests?.message}
+      </Form.Control.Feedback>
       <div className="mt-3">
         <Form.Check label="WiFi" name="wifi" onChange={handleMetaChange} />
         <Form.Check
           label="Parking"
           name="parking"
-          value={formData.meta.parking}
           onChange={handleMetaChange}
         />
         <Form.Check
           label="Breakfast"
           name="breakfast"
-          value={formData.meta.breakfast}
           onChange={handleMetaChange}
         />
         <Form.Check
           label="Pets allowed"
           name="pets"
-          value={formData.meta.pets}
           onChange={handleMetaChange}
         />
       </div>
-
       <Form.Control
-        name="address"
-        value={formData.location.address}
         placeholder="Address"
         className="mt-2"
-        onChange={handleLocationChange}
+        {...register("location.address")}
       />
-
       <Form.Control
-        name="city"
-        value={formData.location.city}
         placeholder="City"
         className="mt-2"
-        onChange={handleLocationChange}
+        {...register("location.city")}
       />
-
       <Form.Control
-        name="country"
-        value={formData.location.country}
         placeholder="Country"
         className="mt-2"
-        onChange={handleLocationChange}
+        {...register("location.country")}
       />
-
-      <Button type="submit" className="mt-3">
-        Create venue
+      <Button type="submit" className="mt-3" disabled={isSubmitting}>
+        {isSubmitting ? "Creating..." : "Create venue"}{" "}
       </Button>
     </Form>
   );
