@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { specificVenueUrl } from "../../api";
-import { updateVenue } from "../../components/Profile/EditVenue";
+import { updateVenue } from "../../components/ChangeVenue/EditVenue";
 import { getHeaders } from "../../auth/AuthHeaders";
 
 import { Container, Form, Button, Spinner } from "react-bootstrap";

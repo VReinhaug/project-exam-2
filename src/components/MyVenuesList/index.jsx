@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, Col, Button } from "react-bootstrap";
 import { useState } from "react";
-import { deleteVenue } from "../Profile/EditVenue";
+import { deleteVenue } from "../ChangeVenue/DeleteVenue";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
