@@ -26,10 +26,6 @@ function VenueDetails() {
   const [guests, setGuests] = useState(1);
   const [bookingLoading, setBookingLoading] = useState(false);
 
-  const location = [venue.location?.city, venue.location?.country]
-    .filter(Boolean)
-    .join(", ");
-
   useEffect(() => {
     async function fetchVenue() {
       try {
@@ -49,6 +45,10 @@ function VenueDetails() {
 
   if (loading) return <p>Loading...</p>;
   if (!venue) return <p>Venue not found</p>;
+
+  const location = [venue.location?.city, venue.location?.country]
+    .filter(Boolean)
+    .join(", ");
 
   // Calculate number of nights
   let nights = 0;
