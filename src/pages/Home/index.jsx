@@ -13,23 +13,16 @@ import bannerImage from "../../assets/banner.jpg";
 import SearchBar from "../../components/SearchBar";
 
 function Home() {
-  const [venues, setVenues] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [recentVenues, setRecentVenues] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchVenues() {
+    async function fetchRecentVenues() {
       try {
-        const response = await fetch(VENUES_URL);
+        const response = await fetch(`${VENUES_URL}?sort=updated&limit=3`);
         const json = await response.json();
 
-        // Get last updated venues
-        const sorted = json.data.sort(
-          (a, b) => new Date(b.updated) - new Date(a.updated)
-        );
-
-        setVenues(sorted);
-        setFiltered(sorted.slice(0, 3));
+        setRecentVenues(json.data);
       } catch (error) {
         console.error("Error fetching venues:", error);
       } finally {
@@ -37,14 +30,16 @@ function Home() {
       }
     }
 
-    fetchVenues();
+    fetchRecentVenues();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="home-page">
       {}
       <div className="hero">
-        <img src={bannerImage} alt="Travel banner" />
+        <img src={bannerImage} alt="Boats in Cambodia" />
 
         <div className="hero-overlay">
           <h1>Find your next adventure</h1>
@@ -56,7 +51,7 @@ function Home() {
       <Container className="home-content">
         <h2>Recently updated venues</h2>
         <Row>
-          {filtered.slice(0, 3).map((venue) => (
+          {recentVenues.map((venue) => (
             <Col key={venue.id} md={6} lg={4} className="mb-4">
               <VenueCard venue={venue} />
             </Col>
@@ -66,7 +61,7 @@ function Home() {
           <Link to="/venues" className="btn">
             See all venues
           </Link>
-        </div>{" "}
+        </div>
       </Container>
     </div>
   );
