@@ -48,7 +48,7 @@ function Home() {
 
         <div className="hero-overlay">
           <h1>Find your next adventure</h1>
-          <SearchBar venues={venues} />
+          <SearchBar />
         </div>
       </div>
 

@@ -44,7 +44,7 @@ function Venues() {
     <Container className="venues-page">
       <h1 className="venues-title">Where would you like to go?</h1>
       <div className="venues-search">
-        <SearchBar venues={venues} />
+        <SearchBar />
       </div>
 
       <Row>
