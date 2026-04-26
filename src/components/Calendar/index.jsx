@@ -47,6 +47,7 @@ function Calendar({ bookings, onDateChange }) {
         ranges={dateRange}
         disabledDates={disabledDates}
         locale={enUS}
+        minDate={new Date()}
       />
     </div>
   );
