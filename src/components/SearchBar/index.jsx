@@ -51,6 +51,10 @@ function SearchBar({ venues }) {
             const image = venue.media?.[0]?.url;
             const alt = venue.media?.[0]?.alt;
 
+            const location = [venue.location?.city, venue.location?.country]
+              .filter(Boolean)
+              .join(", ");
+
             return (
               <li
                 key={venue.id}
@@ -61,9 +65,7 @@ function SearchBar({ venues }) {
 
                 <div>
                   <strong>{venue.name}</strong>
-                  <p className="search-location">
-                    {venue.location?.city}, {venue.location?.country}
-                  </p>
+                  {location && <p className="search-location">{location}</p>}
                 </div>
               </li>
             );
