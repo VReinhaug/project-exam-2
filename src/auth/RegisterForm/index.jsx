@@ -74,7 +74,7 @@ function RegisterForm() {
   }
 
   return (
-    <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+    <Form noValidate onSubmit={handleSubmit(onSubmit)} className="custom-form">
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">{success}</Alert>}
 

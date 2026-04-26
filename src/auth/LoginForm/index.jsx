@@ -62,7 +62,7 @@ function LoginForm() {
   }
 
   return (
-    <Form novalidate onSubmit={handleSubmit(onSubmit)}>
+    <Form novalidate onSubmit={handleSubmit(onSubmit)} className="custom-form">
       {serverError && <Alert variant="danger">{serverError}</Alert>}
 
       <Form.Group className="mb-3">

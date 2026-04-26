@@ -4,12 +4,6 @@
   max-width: 500px;
   margin-top: 80px;
 
-  .btn-group {
-    .btn {
-      border-radius: 0;
-    }
-  }
-
   .auth-toggle {
     background: transparent;
     border: 1px solid $nav-success;
@@ -26,11 +20,5 @@
       color: $text-main;
       border: 1px solid $nav-success;
     }
-  }
-
-  form {
-    background: rgba(255, 255, 255, 0.02);
-    padding: 2rem;
-    border-radius: 10px;
   }
 }

@@ -3,6 +3,7 @@ import { Container, Button, ButtonGroup } from "react-bootstrap";
 import LoginForm from "../../auth/LoginForm";
 import RegisterForm from "../../auth/RegisterForm";
 import "./login.scss";
+import "../../styles/_forms.scss";
 
 function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
