@@ -11,26 +11,34 @@ import "./venues.scss";
 
 function Venues() {
   const [venues, setVenues] = useState([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
-    async function fetchVenues() {
-      try {
-        const response = await fetch(VENUES_URL);
-        const json = await response.json();
+    fetchVenues(page);
+  }, [page]);
 
-        setVenues(json.data);
-      } catch (error) {
-        console.error("Error fetching venues:", error);
-      } finally {
-        setLoading(false);
-      }
+  async function fetchVenues(pageNumber) {
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${VENUES_URL}?limit=12&page=${pageNumber}`);
+      const json = await response.json();
+
+      setVenues((prev) => [...prev, ...json.data]);
+
+      setIsLastPage(json.meta.isLastPage);
+    } catch (error) {
+      console.error("Error fetching venues:", error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchVenues();
-  }, []);
-
-  if (loading) return <p>Loading venues...</p>;
+  function loadMore() {
+    setPage((prev) => prev + 1);
+  }
 
   return (
     <Container className="venues-page">
@@ -46,6 +54,14 @@ function Venues() {
           </Col>
         ))}
       </Row>
+
+      {!isLastPage && (
+        <div className="text-center my-4">
+          <button onClick={loadMore} disabled={loading} className="btn">
+            {loading ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      )}
     </Container>
   );
 }
