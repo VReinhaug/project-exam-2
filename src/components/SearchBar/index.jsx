@@ -1,20 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { VENUES_URL } from "../../api";
 import "./searchBar.scss";
 
 function SearchBar({ venues }) {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
-  const filteredVenues =
-    query.length > 0
-      ? venues.filter((venue) =>
-          venue.name.toLowerCase().includes(query.toLowerCase())
-        )
-      : [];
+  useEffect(() => {
+    if (!query) {
+      setResults([]);
+      return;
+    }
+
+    const delayDebounce = setTimeout(async () => {
+      try {
+        const response = await fetch(`${VENUES_URL}/search?q=${query}`);
+        const json = await response.json();
+
+        setResults(json.data);
+      } catch (error) {
+        console.error("Search error:", error);
+      }
+    }, 400);
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
 
   function handleSelect(id) {
     setQuery("");
+    setResults([]);
     navigate(`/venues/${id}`);
   }
 
@@ -29,9 +45,9 @@ function SearchBar({ venues }) {
         aria-label="Search venues"
       />
 
-      {filteredVenues.length > 0 && (
+      {results.length > 0 && (
         <ul className="search-dropdown">
-          {filteredVenues.slice(0, 5).map((venue) => {
+          {results.slice(0, 5).map((venue) => {
             const image = venue.media?.[0]?.url;
             const alt = venue.media?.[0]?.alt;
 
