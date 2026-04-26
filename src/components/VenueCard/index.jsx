@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 
 function VenueCard({ venue }) {
   const image = venue.media?.[0]?.url;
-
   const alt = venue.media?.[0]?.alt;
+
+  const location = [venue.location?.city, venue.location?.country]
+    .filter(Boolean)
+    .join(", ");
 
   return (
     <Link to={`/venues/${venue.id}`} className="venue-card">
@@ -21,10 +24,7 @@ function VenueCard({ venue }) {
 
         <div className="venue-content">
           <h3>{venue.name}</h3>
-
-          <p className="venue-location">
-            {venue.location?.city}, {venue.location?.country}
-          </p>
+          <p className="venue-location">{location || "\u00A0"}</p>{" "}
         </div>
       </div>
     </Link>

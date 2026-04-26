@@ -41,6 +41,9 @@ function MyVenuesList({ venues = [], setVenues }) {
     const alt = venue.media?.[0]?.alt;
     const isOpen = openVenueId === venue.id;
     const bookings = venue.bookings || [];
+    const location = [venue.location?.city, venue.location?.country]
+      .filter(Boolean)
+      .join(", ");
     const sortedBookings = [...bookings].sort(
       (a, b) => new Date(a.dateFrom) - new Date(b.dateFrom)
     );
@@ -80,9 +83,7 @@ function MyVenuesList({ venues = [], setVenues }) {
             </div>
             <Card.Body>
               <Card.Title>{venue.name}</Card.Title>
-              <p className="venue-location">
-                {venue.location?.city}, {venue.location?.country}
-              </p>
+              <p className="venue-location">{location || "\u00A0"}</p>
             </Card.Body>
           </Link>
           <Card.Body className="pt-0">

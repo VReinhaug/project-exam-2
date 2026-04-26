@@ -26,6 +26,10 @@ function VenueDetails() {
   const [guests, setGuests] = useState(1);
   const [bookingLoading, setBookingLoading] = useState(false);
 
+  const location = [venue.location?.city, venue.location?.country]
+    .filter(Boolean)
+    .join(", ");
+
   useEffect(() => {
     async function fetchVenue() {
       try {
@@ -95,9 +99,7 @@ function VenueDetails() {
         ⭐ {venue.rating ? venue.rating.toFixed(1) : "No rating"}
       </p>
 
-      <p className="location">
-        {venue.location?.city}, {venue.location?.country}
-      </p>
+      <p className="venue-location">{location || "\u00A0"}</p>
 
       <div className="image-gallery">
         {venue.media?.[0]?.url ? (
