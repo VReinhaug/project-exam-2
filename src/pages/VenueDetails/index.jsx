@@ -122,7 +122,7 @@ function VenueDetails() {
       </div>
 
       <Row className="mt-4">
-        <Col md={8}>
+        <Col md={6}>
           <h3>Description</h3>
           <p>{venue.description}</p>
 
@@ -136,7 +136,7 @@ function VenueDetails() {
           </ul>
         </Col>
 
-        <Col md={4}>
+        <Col md={6}>
           <div className="booking-card">
             <p className="price">${venue.price} / night</p>
 
