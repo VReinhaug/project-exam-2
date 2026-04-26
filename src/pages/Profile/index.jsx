@@ -6,6 +6,7 @@ import { getHeaders } from "../../auth/AuthHeaders";
 import UpgradeToManager from "../../components/Profile/UpgradeToManager";
 import UpdateAvatar from "../../components/Profile/UpdateAvatar";
 import ManagerSection from "../../components/Profile/ManagerSection";
+import MyBookings from "../../components/MyBookings";
 import "./profile.scss";
 import "../../styles/_forms.scss";
 
@@ -89,29 +90,7 @@ function Profile() {
         </div>
       </div>
 
-      <section className="mt-5">
-        <h2>My Bookings</h2>
-        {bookings.length === 0 ? (
-          <p>You have no bookings yet</p>
-        ) : (
-          <Row>
-            {bookings.map((booking) => (
-              <Col key={booking.id} md={6} lg={4}>
-                <Card className="mb-3">
-                  <Card.Body>
-                    <Card.Title>Booking</Card.Title>
-                    <p>
-                      From: {new Date(booking.dateFrom).toLocaleDateString()}
-                    </p>
-                    <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
-                    <p>Guests: {booking.guests}</p>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        )}
-      </section>
+      <MyBookings bookings={bookings} />
 
       <UpgradeToManager profile={profile} onUpdate={setProfile} />
 

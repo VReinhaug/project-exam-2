@@ -10,7 +10,7 @@ export const CREATE_BOOKING_URL = `${HOLIDAZE_URL}/bookings`;
 
 export const profileUrl = (name) => `${HOLIDAZE_URL}/profiles/${name}`;
 export const profileBookingsUrl = (name) =>
-  `${HOLIDAZE_URL}/profiles/${name}/bookings`;
+  `${HOLIDAZE_URL}/profiles/${name}/bookings?_venue=true`;
 export const profileVenuesUrl = (name) =>
   `${HOLIDAZE_URL}/profiles/${name}/venues`;
 
