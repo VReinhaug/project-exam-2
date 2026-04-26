@@ -64,12 +64,14 @@ function MyVenuesList({ venues = [], setVenues }) {
             <Link to={`/venues/edit/${venue.id}`}>
               <FontAwesomeIcon
                 icon={faPenToSquare}
+                className="icon"
                 style={{ cursor: "pointer" }}
               />
             </Link>
 
             <FontAwesomeIcon
               icon={faTrashCan}
+              className="icon"
               style={{ cursor: "pointer" }}
               onClick={() => handleDelete(venue.id)}
             />

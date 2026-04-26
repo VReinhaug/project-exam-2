@@ -22,6 +22,7 @@
         height: 100px;
         border-radius: 50%;
         border: 3px solid $background;
+        object-fit: cover;
       }
 
       h1 {
@@ -38,5 +39,9 @@
     background: rgba(255, 255, 255, 0.02);
     border: none;
     color: $text-main;
+  }
+
+  .icon {
+    color: $header-icons;
   }
 }

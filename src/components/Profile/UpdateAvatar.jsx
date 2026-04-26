@@ -76,6 +76,7 @@ function UpdateAvatar({ name, onUpdate }) {
       {!showForm ? (
         <FontAwesomeIcon
           icon={faPenToSquare}
+          className="icon"
           onClick={() => setShowForm(true)}
           style={{ cursor: "pointer" }}
           title="Edit avatar"
