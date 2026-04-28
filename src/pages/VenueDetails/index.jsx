@@ -60,8 +60,6 @@ function VenueDetails() {
 
   const totalPrice = nights * venue.price;
 
-  const image = venue.media?.[0]?.url;
-
   async function handleBooking() {
     if (!user) {
       navigate("/login");
