@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+
+.holidaze-footer {
+  background-color: $nav-success;
+  padding: 2rem 0;
+  margin-top: 3rem;
+
+  .footer-content {
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: $font-h1;
+    color: $header-icons;
+    font-size: 1.5rem;
+  }
+
+  .footer-text {
+    color: $text-main;
+    margin: 0.5rem 0;
+  }
+
+  .copyright {
+    font-size: 0.9rem;
+    color: $text-main;
+    opacity: 0.7;
+  }
+}

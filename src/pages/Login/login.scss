@@ -1,0 +1,24 @@
+@import "../../styles/variables";
+
+.login-page {
+  max-width: 500px;
+  margin-top: 80px;
+
+  .auth-toggle {
+    background: transparent;
+    border: 1px solid $nav-success;
+    color: $text-main;
+    font-weight: 600;
+
+    &:hover {
+      background: rgba(6, 64, 47, 0.2);
+      color: $text-main;
+    }
+
+    &.active {
+      background: $nav-success;
+      color: $text-main;
+      border: 1px solid $nav-success;
+    }
+  }
+}

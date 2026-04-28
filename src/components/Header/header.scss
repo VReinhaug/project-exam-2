@@ -1,0 +1,93 @@
+@import "../../styles/variables";
+
+.holidaze-navbar {
+  padding: 0;
+}
+
+// Header background
+.holidaze-header {
+  background-color: $nav-success;
+  padding: 0.8rem 1.5rem;
+}
+
+// Logo
+
+.logo {
+  font-family: $font-h1;
+  color: $header-icons;
+  font-size: 1.6rem;
+  text-decoration: none;
+
+  &:hover {
+    color: $header-icons;
+  }
+}
+
+// Burger menu
+
+.navbar-toggler {
+  border: none;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+  width: 24px;
+  height: 2px;
+  background-color: $header-icons;
+  position: relative;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: $header-icons;
+}
+
+.navbar-toggler-icon::before {
+  top: -7px;
+}
+
+.navbar-toggler-icon::after {
+  top: 7px;
+}
+
+// Offcanvas menu
+
+.offcanvas {
+  background-color: $background;
+}
+
+.offcanvas .nav-link {
+  font-family: $font-headings;
+  color: $text-main;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 0;
+
+  &:hover {
+    color: $header-icons;
+  }
+}
+
+.offcanvas-title {
+  font-family: $font-h1;
+  color: $header-icons;
+}
+
+.offcanvas .btn-close {
+  filter: invert(79%) sepia(23%) saturate(458%) hue-rotate(315deg)
+    brightness(102%) contrast(92%);
+  opacity: 1;
+
+  &:focus {
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,11 @@
+@import "./variables";
+
+.custom-form {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 2rem;
+  border-radius: 10px;
+
+  .form-label {
+    margin-bottom: 0.2rem;
+  }
+}

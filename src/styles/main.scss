@@ -1,0 +1,32 @@
+@import "~bootstrap/scss/bootstrap";
+@import "react-date-range/dist/styles.css";
+@import "react-date-range/dist/theme/default.css";
+@import "variables";
+
+#root {
+  background-color: $background;
+  min-height: 100vh;
+}
+
+body {
+  background-color: $background;
+  color: $text-main;
+  font-family: $font-body;
+}
+
+h1 {
+  font-family: $font-h1;
+  color: $header-icons;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-family: $font-headings;
+  color: $header-icons;
+}
+
+a {
+  text-decoration: none;
+}

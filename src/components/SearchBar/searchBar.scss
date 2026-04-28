@@ -1,0 +1,65 @@
+@import "../../styles/variables";
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+
+  background: #151411;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 3000;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.search-item img.search-thumbnail {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.search-location {
+  font-size: 0.8rem;
+  color: $text-main;
+  margin: 0;
+  text-align: left;
+}
