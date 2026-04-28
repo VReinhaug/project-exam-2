@@ -9,6 +9,9 @@ function MyBookings({ bookings }) {
   today.setHours(0, 0, 0, 0);
 
   const { upcoming, past } = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const upcoming = [];
     const past = [];
 

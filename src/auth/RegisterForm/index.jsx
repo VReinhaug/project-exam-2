@@ -39,7 +39,6 @@ function RegisterForm() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
