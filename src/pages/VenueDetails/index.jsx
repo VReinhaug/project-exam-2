@@ -79,7 +79,7 @@ function VenueDetails() {
       await createBooking({
         dateFrom: selectedDates.startDate,
         dateTo: selectedDates.endDate,
-        guests,
+        guests: Number(guests),
         venueId: venue.id,
       });
 
