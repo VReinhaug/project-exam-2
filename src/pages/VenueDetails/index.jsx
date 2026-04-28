@@ -111,14 +111,6 @@ function VenueDetails() {
         ) : (
           <div className="no-image">Sorry, no image available</div>
         )}
-
-        <div className="thumbnail-row">
-          {venue.media
-            ?.slice(1, 5)
-            .map((img, index) =>
-              img.url ? <img key={index} src={img.url} alt={img.alt} /> : null
-            )}
-        </div>
       </div>
 
       <Row className="mt-4">
