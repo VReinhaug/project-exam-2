@@ -26,7 +26,13 @@ function Venues() {
       const response = await fetch(`${VENUES_URL}?limit=12&page=${pageNumber}`);
       const json = await response.json();
 
-      setVenues((prev) => [...prev, ...json.data]);
+      setVenues((prev) => {
+        const newVenues = json.data.filter(
+          (newVenue) => !prev.some((v) => v.id === newVenue.id)
+        );
+
+        return [...prev, ...newVenues];
+      });
 
       setIsLastPage(json.meta.isLastPage);
     } catch (error) {
