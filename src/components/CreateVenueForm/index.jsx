@@ -134,6 +134,7 @@ function CreateVenueForm({ onCreate }) {
         console.log("Validation errors:", errors);
       })}
       noValidate
+      className="custom-form"
     >
       <h3>Create new venue</h3>
       <Form.Control
