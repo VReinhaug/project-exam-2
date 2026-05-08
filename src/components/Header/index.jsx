@@ -14,8 +14,6 @@ function Header() {
   const location = useLocation();
   const [show, setShow] = useState(false);
 
-  console.log("User:", user);
-
   function handleClose() {
     setShow(false);
   }

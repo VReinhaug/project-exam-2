@@ -8,4 +8,21 @@
   .form-label {
     margin-bottom: 0.2rem;
   }
+
+  .invalid-feedback {
+    color: $error;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  .form-control.is-invalid {
+    border-color: $error;
+
+    &:focus {
+      border-color: $error;
+      box-shadow: 0 0 0 0.2rem rgba(213, 137, 133, 0.25);
+    }
+  }
 }

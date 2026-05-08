@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Holidaze
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Home Page](./src/assets/home-screenshot.jpg)
 
-## Available Scripts
+Holidaze is a React-based web application for booking and managing venues for overnight stays.
 
-In the project directory, you can run:
+This project was developed as the Project Exam 2 assignment during the Front-end Development program at Noroff.
 
-### `npm start`
+Users can browse venues, view detailed venue information, register an account, and make bookings. Users can also register as Venue Managers, allowing them to create, update, and delete venues, as well as manage bookings for their venues.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+### General User Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Browse and search available venues
+- View detailed venue information
+- Register and log in to an account
+- Book venues through an availability calendar
+- View upcoming and previous bookings
+- Responsive design for mobile, tablet, and desktop
 
-### `npm run build`
+### Venue Manager Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Register as a Venue Manager
+- Create new venues
+- Edit and delete owned venues
+- View bookings for owned venues
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech Stack
 
-### `npm run eject`
+- React (Create React App)
+- JavaScript
+- React Router
+- Bootstrap
+- Sass
+- React Context API for authentication state management
+- Yup form validation
+- Noroff API v2
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## API
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+This project uses the Noroff API v2.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Documentation: https://docs.noroff.dev/docs/v2
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone the repository
 
-### Code Splitting
+```bash
+git clone https://github.com/VReinhaug/project-exam-2
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. Install dependencies
 
-### Analyzing the Bundle Size
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. Create an .env file in the root directory and add:
 
-### Making a Progressive Web App
+REACT_APP_API_KEY=your_api_key
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+4. Start the development server
 
-### Advanced Configuration
+```bash
+npm run start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Open http://localhost:3000 to view it in the browser.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Deployment
 
-### `npm run build` fails to minify
+The application is deployed on Netlify.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Live version
+
+[https://exam2-veronika.netlify.app/](https://exam2-veronika.netlify.app/)

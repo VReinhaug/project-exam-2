@@ -82,7 +82,11 @@ function UpdateAvatar({ name, onUpdate }) {
           title="Edit avatar"
         />
       ) : (
-        <Form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-4">
+        <Form
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          className="mt-4 custom-form"
+        >
           <Form.Group>
             <Form.Label>Update avatar URL</Form.Label>
             <Form.Control {...register("url")} isInvalid={!!errors.url} />
