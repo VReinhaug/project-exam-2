@@ -7,6 +7,7 @@ import VenueDetails from "./pages/VenueDetails";
 import LoginPage from "./pages/Login";
 import Profile from "./pages/Profile";
 import EditVenue from "./pages/EditVenue";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile/:name" element={<Profile />} />
           <Route path="/venues/edit/:id" element={<EditVenue />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </div>
