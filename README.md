@@ -30,7 +30,7 @@ Users can browse venues, view detailed venue information, register an account, a
 
 ---
 
-## Tech Stack
+## Built With
 
 - React (Create React App)
 - JavaScript
@@ -56,7 +56,7 @@ Documentation: https://docs.noroff.dev/docs/v2
 1. Clone the repository
 
 ```bash
-git clone https://github.com/VReinhaug/project-exam-2
+git clone https://github.com/VReinhaug/project-exam-2.git
 ```
 
 2. Install dependencies
@@ -79,10 +79,12 @@ Open http://localhost:3000 to view it in the browser.
 
 ---
 
-## Deployment
+## Hosted Site
 
 The application is deployed on Netlify.
 
-### Live version
-
 [https://exam2-veronika.netlify.app/](https://exam2-veronika.netlify.app/)
+
+## Contact
+
+[My LinkedIn Profile](https://www.linkedin.com/in/veronika-reinhaug/)
